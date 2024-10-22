@@ -26,6 +26,8 @@ pipeline {
         
      stage('Deploy') {
             steps {
+                withCredentials([usernamePassword(credentialsId: 'Dockercreds', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
                script {
                    def dockerrm = 'sudo docker rm -f My-first-containe2211 || true'
                     def dockerCmd = 'sudo docker run -itd --name My-first-containe2211 -p 8083:80 pallavic9/phpproject:v1'
